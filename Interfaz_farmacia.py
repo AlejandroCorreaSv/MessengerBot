@@ -99,16 +99,16 @@ but_goto.grid(row=0, column=0)
 frame2=Frame(window)
 frame2.pack(pady=10)
 
-but_p1 = Button(frame2, fg="white", bg="black", font=FONT_BUTTON, text="Habitación 1", command=punto1)
+but_p1 = Button(frame2, fg="white", bg="black", font=FONT_BUTTON, text="Habitación 0", command=punto1)
 but_p1.grid(row=0, column=0)
 
-but_p2 = Button(frame2, fg="white", bg="black", font=FONT_BUTTON, text="Habitación 2", command=punto2)
+but_p2 = Button(frame2, fg="white", bg="black", font=FONT_BUTTON, text="Habitación 1", command=punto2)
 but_p2.grid(row=0, column=1)
 
-but_p3 = Button(frame2, fg="white", bg="black", font=FONT_BUTTON, text="Habitación 3", command=punto3)
+but_p3 = Button(frame2, fg="white", bg="black", font=FONT_BUTTON, text="Habitación 2", command=punto3)
 but_p3.grid(row=0, column=3)
 
-but_p4 = Button(frame2, fg="white", bg="black", font=FONT_BUTTON, text="Habitación 4", command=punto4)
+but_p4 = Button(frame2, fg="white", bg="black", font=FONT_BUTTON, text="Habitación 3", command=punto4)
 but_p4.grid(row=0, column=4)
 
 #ADD BUTTON; añadimos los botones correspondientes a las trayectorias 1, 2 y 3 en el frame 3

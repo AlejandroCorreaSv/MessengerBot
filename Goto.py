@@ -33,6 +33,7 @@ def callback1(data):            #callback correspondiente a subscribirnos al top
     
     cliente.x = data.position.x     #asignamos la posicion y orientacion leaida del topic
     cliente.y = data.position.y
+    cliente.q0= data.orientation.x
     cliente.q3 = data.orientation.w
 
     cliente.Goto()              #llamamos a la funcion que mueve el robot
@@ -85,6 +86,7 @@ class ImgScanner:
 class ClientGoto:
     x=0.0
     y=0.0
+    q0=0.0
     q3=0.0
 
     def __init__(self):
@@ -101,7 +103,7 @@ class ClientGoto:
         goal.target_pose.header.stamp = rospy.Time.now()
         goal.target_pose.pose.position.x=self.x
         goal.target_pose.pose.position.y=self.y
-
+        goal.target_pose.pose.orientation.w= self.q0
         goal.target_pose.pose.orientation.w= self.q3
 
         #mandamos el goal 
