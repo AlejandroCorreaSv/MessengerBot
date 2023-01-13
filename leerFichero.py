@@ -47,7 +47,7 @@ class Posicion():
 
     def leerFichero(self):
         rate=rospy.Rate(1)
-        f = open("/home/alejandro/Git/MessengerBot/coord_gazebo.txt")
+        f = open("/home/alejandro/Git/MessengerBot/coord_lab.txt")
         
         lineas=f.readlines() #guardamos las lineas que hay en el fichero para poder recorrerlo posteriormente
         f.close()

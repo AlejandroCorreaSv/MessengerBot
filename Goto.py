@@ -13,9 +13,11 @@ from datetime import datetime
 import cv2 as cv
 from cv_bridge import CvBridge,CvBridgeError
 from sensor_msgs.msg import Image
+import numpy as np
 
 
-red_object = False
+blue_object = False
+check = False
 
 
 
@@ -57,23 +59,28 @@ class ImgScanner:
 
     def proccess_frame(self,frame):     #funcion que se encarga de detectar si se detecta la señal
                                         #de obejtivo cumplido ( una tarjeta roja)
-        global red_object
-
+        global blue_object,check
         hsv = cv.cvtColor(frame,cv.COLOR_BGR2HSV)
 
-        lower = (0,100,100)
-        upper = (10,255,255)
+        lower = (100,100,20)
+        upper = (125,255,255)
 
         umbr = cv.inRange(hsv,lower,upper)
 
         contours,_= cv.findContours(umbr,cv.RETR_TREE,cv.CHAIN_APPROX_SIMPLE)
 
-        for i in range(len(contours)):
-            if cv.contourArea(contours[i]) > 20:
-                cv.drawContours(frame,contours,i,(255,0,0),3)
-                red_object = True
-            else:
-                red_object = False
+        areas = [cv.contourArea(c) for c in contours]
+        if areas: 
+            area = np.amax(areas)
+            cv.drawContours(frame,contours,np.argmax(areas),(255,0,0),3)
+            if check == True:
+                if  area >= 300:
+                    rospy.loginfo("Area good")
+                    blue_object = True
+        
+        cv.imshow("Azul",frame)
+        cv.waitKey(3)
+        
 
 
 #   Clase ClientGoto que contiene:
@@ -96,6 +103,8 @@ class ClientGoto:
     def Goto(self):
         #creamos un objeto de tipo MoveBaseGoal 
         #donde tiene campo Point Position y Quaternion orientation
+        global check, blue_object
+
         goal=MoveBaseGoal()
 
         #rellenamos los campos correspondientes
@@ -117,13 +126,21 @@ class ClientGoto:
             rospy.Rate(10)
             estado=self.client.get_state() #vamos mirando el estado de la accion
 	    
+        check = True
         
         #esperamos a que la clase ImgScanner detecte la señal de  objetivo cumplido
-        #while(red_object == False):
-        #    rospy.Rate(10)
-            
+        spin = blue_object
+        while spin == False:
+            rospy.Rate(10)
+            spin = blue_object
+
+        
+
         if(self.client.get_result()): #si el resultado es true
+            rospy.loginfo("Card detected")
             rospy.loginfo("Goal conseguido")
+            check = False
+            blue_object = False
 
 if __name__=="__main__":
     

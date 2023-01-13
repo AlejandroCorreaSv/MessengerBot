@@ -48,7 +48,7 @@ class Coord():
         return quat
 
     def escribirFichero(self, x, y, cuaternio):
-        f=open("coord_gazebo.txt", "a")
+        f=open("coord_lab.txt", "a")
         f.write(str(x))
         f.write(";")
         f.write(str(y))

@@ -47,7 +47,7 @@ def punto4():
 #argumentos por la línea de comandos los números de coordenadas correspondientes (0-1-2)
 def trayectoria1():
 
-    os.system('gnome-terminal -x python3 leerFichero.py 0 1 2')   #lanzamos el leerFichero
+    os.system('gnome-terminal -x python3 leerFichero.py 0 2 3')   #lanzamos el leerFichero
 
 #Botón trayectoria2 que se encarga de lanzar el script leerFichero pasandole como 
 #argumentos por la línea de comandos los números de coordenadas correspondientes (0-1-2)
